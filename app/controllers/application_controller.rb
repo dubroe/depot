@@ -11,4 +11,8 @@ class ApplicationController < ActionController::Base
       session[:cart_id] = cart.id
       cart
     end
+    
+    def redirect_to_store_with_empty_cart
+      redirect_to store_url, notice: 'Your cart is currently empty'
+    end
 end

@@ -58,7 +58,7 @@ Depot::Application.routes.draw do
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
   
-  root :to => 'store#index', as: 'store' # as: tells Rails to create a store_path variable
+  root :to => 'store#index', as: 'store' # as: tells Rails to create a store_path and store_url variable
 
   # See how all your routes lay out with "rake routes"
 
