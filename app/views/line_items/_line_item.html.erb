@@ -7,6 +7,8 @@
 	<td><%= line_item.product.title %></td>
 	<td class="item_price"><%= number_to_currency(line_item.total_price) %></td>
 </tr>
+<% unless local_assigns[:in_email] %>
 <tr>
 	<td colspan="3"><%= button_to 'Remove 1', decrement_line_item_path(line_item), remote: true %></td>
 </tr>
+<% end %>
