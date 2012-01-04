@@ -21,4 +21,13 @@ class ActiveSupport::TestCase
   def setup
     login_as :one if defined? session
   end
+  
+  def login_user_integration
+    user = users(:one)
+    get "/login"
+    assert_response :success
+    post_via_redirect "/login", name: user.name, password: 'secret'
+    assert_response :success
+    assert_equal '/admin', path
+  end
 end

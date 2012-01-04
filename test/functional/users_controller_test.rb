@@ -36,7 +36,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should update user" do
-    put :update, id: @user.to_param, user: @input_attributes
+    put :update, id: @user.to_param, user: @input_attributes, old_password: 'secret'
     assert_redirected_to users_path
   end
 

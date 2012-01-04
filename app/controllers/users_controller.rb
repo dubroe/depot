@@ -57,7 +57,10 @@ class UsersController < ApplicationController
   # PUT /users/1.json
   def update
     @user = User.find(params[:id])
-
+    unless @user.authenticate(params[:old_password])
+      redirect_to edit_user_path(@user), notice: "Incorrect Old Password"
+      return
+    end
     respond_to do |format|
       if @user.update_attributes(params[:user])
         format.html { redirect_to users_url, notice: "User #{@user.name} was successfully updated." }

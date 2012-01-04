@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class UserStoriesTest < ActionDispatch::IntegrationTest
-  fixtures :products
+  fixtures :products, :carts
   
   test "buying a product" do
     LineItem.delete_all
@@ -54,18 +54,33 @@ class UserStoriesTest < ActionDispatch::IntegrationTest
     assert_equal "Pragmatic Store Order Confirmation", mail.subject
     
     #Ship the product
-    #TODO: Currently fails because need to be admin to set ship_date
-    '''
+    login_user_integration
     now = Time.now.to_date
     put_via_redirect "/orders/#{order.id}", order: {ship_date: now}
     assert_response :success
     assert_equal Order.find(order.id).ship_date.to_date, now
     mail = ActionMailer::Base.deliveries.last
     assert_equal "Pragmatic Store Order Shipped", mail.subject
-    '''
   end
 
-  # test "the truth" do
-  #   assert true
-  # end
+  test "should fail on access of sensitive data" do
+    login_user_integration
+    
+    #look at a protected resource
+    get "/carts/#{carts(:one).id}"
+    assert_response :success
+    assert_equal "/carts/#{carts(:one).id}", path
+    
+    #logout user
+    delete "/logout"
+    assert_response :redirect
+    assert_template "/"
+    
+    #try to look at protected resource again, should be redirected to login page
+    get "/carts/#{carts(:one).id}"
+    assert_response :redirect
+    follow_redirect!
+    assert_equal '/login', path
+  end
+  
 end
