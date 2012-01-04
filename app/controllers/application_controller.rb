@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_filter :authorize
+  before_filter :set_logged_in_user
   protect_from_forgery
   
   private
@@ -18,6 +19,12 @@ class ApplicationController < ActionController::Base
     def instantiate_controller_and_action_names
         @current_action = action_name
         @current_controller = controller_name
+    end
+  
+  private
+  
+    def set_logged_in_user
+      @logged_in_user = User.find_by_id(session[:user_id])
     end
   
   protected

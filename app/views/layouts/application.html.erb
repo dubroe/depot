@@ -25,7 +25,8 @@
 				<li><a href="http://www..../news">News</a></li>
 				<li><a href="http://www..../contact">Contact</a></li>
 			</ul>
-			<% if session[:user_id] %>
+			<% if @logged_in_user %>
+			<div id="logged_in_as">Logged in as <%= @logged_in_user.name %></div>
 			<ul>
 				<li><%= link_to 'Orders', orders_path %></li>
 				<li><%= link_to 'Products', products_path %></li>
