@@ -12,7 +12,11 @@ class ApplicationController < ActionController::Base
       cart
     end
     
-    def redirect_to_store_with_empty_cart
-      redirect_to store_url, notice: 'Your cart is currently empty'
+    before_filter :instantiate_controller_and_action_names
+
+    def instantiate_controller_and_action_names
+        @current_action = action_name
+        @current_controller = controller_name
     end
+    
 end
