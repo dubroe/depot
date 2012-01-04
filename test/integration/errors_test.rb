@@ -2,7 +2,8 @@ require 'test_helper'
 
 class ErrorsTest < ActionDispatch::IntegrationTest
   fixtures :all
-
+  
+  ''' No longer applies
   test "should mail the admin when error occurs" do
       get "/carts/wibble" 
       assert_response :redirect  # should redirect to...
@@ -13,4 +14,5 @@ class ErrorsTest < ActionDispatch::IntegrationTest
       assert_equal "Sam Ruby <depot@example.com>", mail[:from].value
       assert_equal "Application failure in Depot", mail.subject
     end
+  '''
 end

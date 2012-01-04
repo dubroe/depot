@@ -4,7 +4,7 @@ This is just to inform you that an exception was raised and rescued in the Depot
 
 Error details:
 
-<%= @error.message %>
+<%= @error ? @error.message : "None" %>
 
 Regards,
 Depot App
