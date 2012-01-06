@@ -6,20 +6,17 @@ Depot::Application.routes.draw do
     post 'login' => :create
     delete 'logout' => :destroy
   end
-
-  resources :users
-
-  resources :pay_types
-
-  resources :orders
-
-  resources :line_items do
-    post :decrement, on: :member
+  
+  scope '(:locale)' do
+    resources :users
+    resources :pay_types
+    resources :orders
+    resources :line_items do
+      post :decrement, on: :member
+    end
+    resources :carts
+    root :to => 'store#index', as: 'store' # as: tells Rails to create a store_path and store_url variable
   end
-
-  resources :carts
-
-  get "store/index"
 
   resources :products do
     get :who_bought, on: :member
@@ -75,8 +72,6 @@ Depot::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
-  
-  root :to => 'store#index', as: 'store' # as: tells Rails to create a store_path and store_url variable
 
   # See how all your routes lay out with "rake routes"
 
